@@ -1,0 +1,5 @@
+.shackles {
+  display: flex;
+  flex-direction: row;
+  margin: 4rem;
+}

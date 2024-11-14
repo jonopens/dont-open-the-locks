@@ -1,0 +1,9 @@
+.the-button {
+  margin: 3rem;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.the-button__text {
+  font-size: 1.2rem;
+}
