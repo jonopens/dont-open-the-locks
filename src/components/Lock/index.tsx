@@ -2,15 +2,16 @@ import './lock.css';
 
 type LockProps = {
   isLocked: boolean;
+  shake: 'sm' | 'med' | 'big';
 }
 
 const Lock = (props: LockProps) => {
   const imgSrc = props.isLocked
-    ? "lock.png"
-    : "unlock.png";
+    ? 'lock.png'
+    : 'unlock.png';
 
   return (
-    <div className="lock">
+    <div className={`lock ${props.isLocked ? '' : 'shake-' + props.shake}`}>
       <img
         src={imgSrc}
         width="150px"
