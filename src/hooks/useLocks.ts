@@ -1,53 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+const confirmMessages: string[] = [
+  'Are you sure?',
+  'Are you really, really sure? Like really?',
+  "You've lost your mind. Stop now. Please."
+];
+
+const titles: string[] = [
+  "I wouldn't touch those...",
+  'That was... ill-advised.',
+  'Please. Stop. This is getting out of hand.',
+  'This will not end well...',
+  'Boo.'
+];
+
+const confirmUnlock = (index: number) => {
+  return window.confirm(confirmMessages[index]);
+}
 
 const useLocks = () => {
-  const [checkedOnce, setCheckedOnce] = useState<boolean>(false);
-  const [checkedTwice, setCheckedTwice] = useState<boolean>(false);
-  const [checkedThrice, setCheckedThrice] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("I wouldn't touch those...");
-  const [transition, setTransition] = useState<string>('');
+  const [currentLockIndex, setCurrentLockIndex] = useState<number>(0);
+  const [title, setTitle] = useState<string>(titles[currentLockIndex]);
+  const [transitionClass, setTransitionClass] = useState<string>('');
 
-  const noChecksDone = !checkedOnce && !checkedTwice && !checkedThrice;
-  const noSecondCheck = checkedOnce && !checkedTwice && !checkedThrice;
-  const noThirdCheck = checkedOnce && checkedTwice && !checkedThrice;
-  const allChecks = checkedOnce && checkedTwice && checkedThrice;
+  useEffect(() => {
+    const allConfirmsComplete = currentLockIndex >= 3;
+
+    setTitle(titles[currentLockIndex]);
+    if (allConfirmsComplete) {
+      setTransitionClass(' fade-to-black');
+    }
+  }, [currentLockIndex]);
 
   const handleDialog = () => {
-    if (noChecksDone) {
-      const responseOne = window.confirm("Are you sure?");
-      setCheckedOnce(responseOne);
-      setTitle('That was... ill-advised. I urge you to close this window.');
-    }
-  
-    if (noSecondCheck) {
-      const responseTwo = window.confirm(
-        "Are you really, really sure? Like really?",
-      );
-      setCheckedTwice(responseTwo);
-      setTitle('Please. Stop. This is getting out of hand.');
+    const allConfirmsComplete = currentLockIndex >= 3;
+
+    if (!allConfirmsComplete) {
+      const didConfirm: boolean = confirmUnlock(currentLockIndex);
+
+      if (!didConfirm) return;
     }
 
-    if (noThirdCheck) {
-      const responseThree = window.confirm(
-        "You've lost your mind. Stop now.",
-      );
-      setCheckedThrice(responseThree);
-      setTitle('This will not end well...');
-    }
-  
-    if (allChecks) {
-      setTitle('Boo.');
-      setTransition(' fade-to-black');
-    }
+    setCurrentLockIndex(currentLockIndex + 1);
   };
 
+  console.log('state: ')
+  console.log({
+    currentLockIndex,
+    title,
+    transitionClass,
+  })
+
   return {
-    checkedOnce,
-    checkedTwice,
-    checkedThrice,
+    currentLockIndex,
     handleDialog,
     title,
-    transition,
+    transitionClass,
   };
 };
 

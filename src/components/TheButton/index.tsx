@@ -1,9 +1,10 @@
 import './the-button.css';
 
-const Nuker = (props: any) => {
+const TheButton = (props: any) => {
   return (
     <button 
       aria-label="open the forbidden locks"
+      type="button"
       className="the-button"
       onClick={props.handleClick}
     >
@@ -12,4 +13,4 @@ const Nuker = (props: any) => {
   )
 }
 
-export default Nuker;
+export default TheButton;
