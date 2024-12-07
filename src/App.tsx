@@ -30,7 +30,7 @@ const App = () => {
       </Shackles>
       {!transition && <TheButton handleClick={handleDialog}/>}
     </div>
-	);
+  );
 };
 
 export default App;
