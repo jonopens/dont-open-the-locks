@@ -22,13 +22,13 @@ const App = () => {
 
 	return (
     <div className={`container${transition}`}>
-			<Title text={title} />
+      <Title text={title} />
       <Shackles>
         <Lock isLocked={!checkedOnce} shake="sm" />
         <Lock isLocked={!checkedTwice} shake="med" />
         <Lock isLocked={!checkedThrice} shake="big" />
       </Shackles>
-			{!transition && <TheButton handleClick={handleDialog}/>}
+      {!transition && <TheButton handleClick={handleDialog}/>}
     </div>
 	);
 };
