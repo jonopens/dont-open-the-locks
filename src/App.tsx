@@ -21,7 +21,7 @@ const App = () => {
   // then transition bg to black and on timeout, pull in a scary gif
 
 	return (
-		<div className={`container${transition}`}>
+    <div className={`container${transition}`}>
 			<Title text={title} />
       <Shackles>
         <Lock isLocked={!checkedOnce} shake="sm" />
@@ -29,7 +29,7 @@ const App = () => {
         <Lock isLocked={!checkedThrice} shake="big" />
       </Shackles>
 			{!transition && <TheButton handleClick={handleDialog}/>}
-		</div>
+    </div>
 	);
 };
 
