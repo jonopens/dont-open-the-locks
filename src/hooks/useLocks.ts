@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+import { IUnlockContext, UnlockContext } from '../context/UnlockContext';
 
 const confirmMessages: string[] = [
   'Are you sure?',
@@ -19,18 +20,14 @@ const confirmUnlock = (index: number) => {
 }
 
 const useLocks = () => {
-  const [currentLockIndex, setCurrentLockIndex] = useState<number>(0);
-  const [title, setTitle] = useState<string>(titles[currentLockIndex]);
-  const [transitionClass, setTransitionClass] = useState<string>('');
+  const unlockContext: IUnlockContext = useContext(UnlockContext);
+  const {
+    currentLockIndex,
+    title,
+    transitionClass,
+    updateLockScreen,
+  } = unlockContext;
 
-  useEffect(() => {
-    const allConfirmsComplete = currentLockIndex >= 3;
-
-    setTitle(titles[currentLockIndex]);
-    if (allConfirmsComplete) {
-      setTransitionClass(' fade-to-black');
-    }
-  }, [currentLockIndex]);
 
   const handleDialog = () => {
     const allConfirmsComplete = currentLockIndex >= 3;
@@ -41,15 +38,8 @@ const useLocks = () => {
       if (!didConfirm) return;
     }
 
-    setCurrentLockIndex(currentLockIndex + 1);
+    updateLockScreen(currentLockIndex + 1, titles[currentLockIndex + 1])
   };
-
-  console.log('state: ')
-  console.log({
-    currentLockIndex,
-    title,
-    transitionClass,
-  })
 
   return {
     currentLockIndex,

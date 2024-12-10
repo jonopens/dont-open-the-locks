@@ -1,19 +1,20 @@
-import Audio from "./components/Audio";
-import Lock from "./components/Lock";
+import { useEffect, useState } from 'react';
+import Audio from './components/Audio';
+import Jumpscare from './components/Monster';
 import Shackles from './components/Shackles';
-import TheButton from "./components/TheButton";
-import Title from "./components/Title";
-import useLocks from "./hooks/useLocks";
+import TheButton from './components/TheButton';
+import Title from './components/Title';
+import useLocks from './hooks/useLocks';
 import './app.css';
-import Jumpscare from "./components/Monster";
 
 const App = () => {
-  const {
-    currentLockIndex,
-    handleDialog,
-    title,
-    transitionClass,
-  } = useLocks();
+  const { currentLockIndex } = useLocks();
+  const [transitionClass, setTransitionClass] = useState<string>('');
+  useEffect(() => {
+    if (currentLockIndex >= 3) {
+      setTransitionClass(' fade-to-black');
+    }
+  }, [currentLockIndex]);
 
   // make it scary; slowly increase creep factor
   // font changes; vibration effects
@@ -24,13 +25,9 @@ const App = () => {
     <div className={`container${transitionClass}`}>
       {currentLockIndex < 4 && (
         <>
-          <Title text={title} />
-          <Shackles>
-            <Lock isLocked={currentLockIndex < 1} shake="sm" />
-            <Lock isLocked={currentLockIndex < 2} shake="med" />
-            <Lock isLocked={currentLockIndex < 3} shake="big" />
-          </Shackles>
-          <TheButton handleClick={handleDialog} />
+          <Title />
+          <Shackles />
+          <TheButton />
         </>
       )}
       {currentLockIndex >= 4 && (

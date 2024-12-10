@@ -1,13 +1,12 @@
+import useLocks from '../../hooks/useLocks';
 import './title.css';
 
-type TitleProps = {
-  text: string;
-}
+const Title = () => {
+  const { title } = useLocks();
 
-const Title = (props: TitleProps) => {
   return (
     <div className="title">
-      {props.text}
+      {title}
     </div>
   )
 }
